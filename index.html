@@ -4,316 +4,967 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EddyTech | Build Your Digital Legacy</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lexend:wght@400;600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 
   <style>
+    /* ══════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════ */
     :root {
-      --bg-dark: #05070a;
-      --bg-card: #0d1117;
-      --accent-teal: #38bfa1;
-      --accent-glow: rgba(56, 191, 161, 0.2);
-      --text-main: #e6edf3;
-      --text-muted: #8b949e;
-      --border: #30363d;
-      --font-main: 'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --bg:         #060810;
+      --bg-2:       #0b0f1a;
+      --bg-card:    #0f1420;
+      --teal:       #2de8c8;
+      --teal-dim:   rgba(45,232,200,.12);
+      --teal-glow:  rgba(45,232,200,.35);
+      --amber:      #f4a832;
+      --text:       #dde6f0;
+      --muted:      #6e7e96;
+      --border:     rgba(255,255,255,.07);
+      --border-h:   rgba(45,232,200,.4);
+      --radius:     14px;
+      --mono:       'Space Mono', monospace;
+      --display:    'Syne', sans-serif;
+      --body:       'Outfit', sans-serif;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-main);
-      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.65;
       overflow-x: hidden;
     }
 
-    /* ── STICKY HIRE ME ── */
-    .sticky-hire {
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
       position: fixed;
-      bottom: 25px;
-      right: 25px;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ══════════════════════════════════════
+       STICKY HIRE ME
+    ══════════════════════════════════════ */
+    .hire-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
       z-index: 9999;
-      background: var(--accent-teal);
-      color: var(--bg-dark);
-      padding: 12px 24px;
+      background: var(--teal);
+      color: var(--bg);
+      padding: 13px 26px;
       border-radius: 50px;
+      font-family: var(--display);
       font-weight: 800;
+      font-size: .88rem;
+      letter-spacing: .06em;
       text-decoration: none;
-      box-shadow: 0 10px 30px var(--accent-glow);
-      transition: 0.3s transform ease;
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 0 0 0 var(--teal-glow);
+      animation: pulse-ring 2.5s ease-out infinite;
+      transition: transform .25s ease, box-shadow .25s ease;
     }
-    .sticky-hire:hover {
-      transform: scale(1.05);
-      color: var(--bg-dark);
+    .hire-btn:hover {
+      transform: scale(1.06) translateY(-2px);
+      color: var(--bg);
+      box-shadow: 0 8px 40px var(--teal-glow);
     }
-
-    /* ── NAVIGATION ── */
-    .navbar {
-      background: rgba(5, 7, 10, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 15px 0;
-    }
-    .navbar-brand img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      border: 1px solid var(--accent-teal);
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0   var(--teal-glow); }
+      70%  { box-shadow: 0 0 0 14px transparent; }
+      100% { box-shadow: 0 0 0 0   transparent; }
     }
 
-    /* ── HERO ── */
-    .hero-section {
-      padding: 120px 0 80px;
-      background: radial-gradient(circle at top right, var(--accent-glow), transparent 40%);
-    }
-    .hero-tagline {
-      font-family: var(--font-mono);
-      color: var(--accent-teal);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    .hero-title {
-      font-weight: 800;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      letter-spacing: -2px;
-      margin: 20px 0;
-    }
-    .text-gradient {
-      background: linear-gradient(to right, #fff, var(--accent-teal));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* ── CARDS ── */
-    .tech-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 30px;
-      height: 100%;
-      transition: 0.3s all ease;
-    }
-    .tech-card:hover {
-      border-color: var(--accent-teal);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-    .icon-box {
-      font-size: 2rem;
-      color: var(--accent-teal);
-      margin-bottom: 20px;
-    }
-
-    /* ── PROJECTS ── */
-    .project-link {
-      color: var(--accent-teal);
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      text-decoration: none;
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    .nav-wrap {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 40px;
+      height: 68px;
       display: flex;
       align-items: center;
-      gap: 5px;
+      justify-content: space-between;
+      background: rgba(6,8,16,.7);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
     }
-    .project-link:hover { text-decoration: underline; }
 
-    /* ── FORMS & INPUTS ── */
-    .form-control {
-      background: var(--bg-dark);
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-avatar {
+      width: 42px; 
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--teal);
+      background: var(--bg-card);
+      overflow: hidden; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px var(--teal-dim);
+    }
+
+    .logo-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      display: block;
+    }
+
+    .nav-logo-text {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: .78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .05em;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--teal);
+      transition: width .3s ease;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-toggle {
+      display: none;
+      background: none;
       border: 1px solid var(--border);
-      color: #fff;
-      padding: 12px;
-    }
-    .form-control:focus {
-      background: var(--bg-dark);
-      border-color: var(--accent-teal);
-      color: #fff;
-      box-shadow: 0 0 0 0.25rem var(--accent-glow);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.2rem;
     }
 
-    .btn-primary {
-      background: var(--accent-teal);
+    @media (max-width: 768px) {
+      .nav-wrap { padding: 0 20px; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 68px; left: 0; right: 0;
+        background: var(--bg-2);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: 20px 30px;
+        gap: 20px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: .9rem; }
+    }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-blob {
+      position: absolute;
+      top: -120px; right: -100px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,232,200,.18) 0%, transparent 65%);
+      pointer-events: none;
+      animation: float 8s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-30px) scale(1.04); }
+    }
+
+    .hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--teal);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px; height: 1px;
+      background: var(--teal);
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      line-height: 1.0;
+      letter-spacing: -.04em;
+      margin-bottom: 32px;
+    }
+    .hero-title .line-1 { color: #fff; display: block; }
+    .hero-title .line-2 {
+      display: block;
+      background: linear-gradient(100deg, var(--teal) 0%, var(--amber) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-c {
+      background: var(--teal);
+      color: var(--bg);
       border: none;
-      color: var(--bg-dark);
+      border-radius: 50px;
+      padding: 14px 32px;
+      font-family: var(--display);
       font-weight: 700;
-      padding: 12px 30px;
+      font-size: .95rem;
+      letter-spacing: .02em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow .25s, transform .25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary-c:hover {
+      box-shadow: 0 0 40px var(--teal-glow);
+      transform: translateY(-2px);
+      color: var(--bg);
     }
 
-    footer {
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-h);
+      border-radius: 50px;
+      padding: 14px 32px;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .25s, color .25s, transform .25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost:hover {
+      background: var(--teal-dim);
+      color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 72px;
+      flex-wrap: wrap;
+    }
+    .stat-num {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 2rem;
+      color: #fff;
+    }
+    .stat-num span { color: var(--teal); }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ══════════════════════════════════════
+       SECTION SHARED
+    ══════════════════════════════════════ */
+    section { padding: 100px 40px; }
+
+    .container-c {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--teal);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-label i { font-size: .8rem; }
+
+    .section-title {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -.03em;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin-bottom: 60px;
+    }
+
+    /* ══════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════ */
+    #services { background: var(--bg-2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--amber));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .service-card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: var(--teal-dim);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      color: var(--teal);
+      margin-bottom: 24px;
+      transition: background .3s;
+    }
+
+    .service-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .service-desc {
+      color: var(--muted);
+      font-size: .93rem;
+      line-height: 1.7;
+    }
+
+    .service-num {
+      position: absolute;
+      bottom: 24px; right: 24px;
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--border-h);
+      letter-spacing: .1em;
+    }
+
+    /* ══════════════════════════════════════
+       PROJECTS
+    ══════════════════════════════════════ */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-6px);
+    }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(45,232,200,.1);
+      border: 1px solid rgba(45,232,200,.25);
+      color: var(--teal);
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .08em;
+      padding: 4px 12px;
+      border-radius: 50px;
+      width: fit-content;
+    }
+
+    .project-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #fff;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--teal);
+      text-decoration: none;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: gap .2s;
+    }
+    .project-link:hover { gap: 14px; }
+
+    /* ══════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════ */
+    #testimonials { background: var(--bg-2); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      position: relative;
+      transition: 0.3s ease;
+    }
+    .testimonial-card:hover { border-color: var(--border-h); }
+
+    .quote-icon {
+      font-size: 2.2rem;
+      color: var(--teal);
+      opacity: 0.15;
+      position: absolute;
+      top: 30px; right: 30px;
+    }
+
+    .test-text {
+      font-style: italic;
+      color: var(--text);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .test-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .author-initials {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--teal-dim);
+      color: var(--teal);
+      display: grid; place-items: center;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .author-name {
+      font-weight: 700;
+      color: #fff;
+      display: block;
+      font-size: 1rem;
+    }
+
+    .author-role {
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ══════════════════════════════════════
+       TECH TICKER
+    ══════════════════════════════════════ */
+    .ticker-wrap {
+      background: var(--bg);
       border-top: 1px solid var(--border);
-      padding: 40px 0;
-      font-size: 0.9rem;
-      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 36px;
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .ticker-item i { color: var(--teal); }
+
+    /* ══════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════ */
+    #contact { background: var(--bg); }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
     }
 
-    .social-btn {
-      color: var(--text-main);
-      font-size: 1.5rem;
-      transition: 0.3s;
+    @media (max-width: 900px) { .contact-wrap { grid-template-columns: 1fr; } }
+
+    .contact-link-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: var(--text);
     }
-    .social-btn:hover { color: var(--accent-teal); }
+    .contact-link-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      color: var(--teal);
+    }
+    .socials { display: flex; gap: 14px; margin-top: 40px; }
+    .social-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 13px 16px;
+      outline: none;
+      margin-bottom: 20px;
+    }
+    .form-submit {
+      width: 100%;
+      background: var(--teal);
+      color: var(--bg);
+      border: none;
+      border-radius: 50px;
+      padding: 15px;
+      font-family: var(--display);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer-brand { font-family: var(--display); font-weight: 800; color: #fff; }
+    .footer-brand span { color: var(--teal); }
+    .footer-copy { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
 
-  <a href="https://wa.me/254703817789" class="sticky-hire">
-    <i class="bi bi-whatsapp"></i> HIRE ME
+  <a href="https://wa.me/254703817789" class="hire-btn">
+    <i class="bi bi-whatsapp"></i> Hire Me
   </a>
 
-  <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="logo.jpg" alt="E">
-        <span class="ms-2 fw-bold text-white">EddyTech</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link text-white" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#projects">Work</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
-        </ul>
+  <nav class="nav-wrap">
+    <a class="nav-logo" href="#">
+      <div class="logo-avatar">
+        <img src="logo.jpg" alt="EddyTech Logo">
       </div>
-    </div>
+      <span class="nav-logo-text ms-2">EddyTech</span>
+    </a>
+    
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <i class="bi bi-list"></i>
+    </button>
   </nav>
 
-  <header class="hero-section">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-8">
-          <span class="hero-tagline">Build Your Digital Legacy</span>
-          <h1 class="hero-title">Unleash Your <br><span class="text-gradient">Digital Future</span></h1>
-          <p class="lead text-muted mb-5" style="max-width: 600px;">
-            We architect high-performance digital solutions. From corporate infrastructure to bespoke e-commerce platforms, EddyTech transforms complexity into seamless user experiences.
-          </p>
-          <div class="d-flex gap-3">
-            <a href="#projects" class="btn btn-primary rounded-pill">View Projects</a>
-            <a href="https://wa.me/254703817789" class="btn btn-outline-light rounded-pill">Quick Chat</a>
-          </div>
+  <header class="hero">
+    <div class="hero-blob"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Build Your Digital Legacy</div>
+      <h1 class="hero-title">
+        <span class="line-1">Unleash Your</span>
+        <span class="line-2">Digital Future</span>
+      </h1>
+      <p class="hero-sub">
+        We architect high-performance digital solutions. From corporate infrastructure to bespoke e-commerce platforms — EddyTech transforms complexity into seamless experiences.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary-c">View Projects <i class="bi bi-arrow-right"></i></a>
+        <a href="https://wa.me/254703817789" class="btn-ghost"><i class="bi bi-whatsapp"></i> Quick Chat</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">3<span>+</span></div>
+          <div class="stat-label">Projects Shipped</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2<span>+</span></div>
+          <div class="stat-label">Years Building</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100<span>%</span></div>
+          <div class="stat-label">Remote Ready</div>
         </div>
       </div>
     </div>
   </header>
 
-  <section id="services" class="py-5">
-    <div class="container">
-      <h2 class="fw-800 mb-5 text-center">Core Services</h2>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="tech-card">
-            <div class="icon-box"><i class="bi bi-cart3"></i></div>
-            <h4>E-commerce</h4>
-            <p class="text-muted">High-conversion online stores with integrated payment systems and inventory management.</p>
-          </div>
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Python</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Django</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> JavaScript</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Full Stack</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> REST APIs</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> PostgreSQL</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Bootstrap</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Git & GitHub</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Python</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Django</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> JavaScript</span>
+      <span class="ticker-item"><i class="bi bi-circle-fill"></i> Full Stack</span>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="container-c">
+      <div class="reveal">
+        <div class="section-label"><i class="bi bi-grid-3x3-gap-fill"></i> What I Do</div>
+        <h2 class="section-title">Core Services</h2>
+        <p class="section-sub">End-to-end digital solutions built for performance, scale, and brand authority.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="bi bi-cart3"></i></div>
+          <div class="service-title">E-commerce</div>
+          <div class="service-desc">High-conversion online stores with integrated payment systems and inventory management.</div>
+          <span class="service-num">01</span>
         </div>
-        <div class="col-md-4">
-          <div class="tech-card">
-            <div class="icon-box"><i class="bi bi-shield-check"></i></div>
-            <h4>Corporate Solutions</h4>
-            <p class="text-muted">Scalable, secure web architecture designed for corporate reliability and brand authority.</p>
-          </div>
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="bi bi-shield-check"></i></div>
+          <div class="service-title">Corporate Solutions</div>
+          <div class="service-desc">Scalable, secure web architecture designed for corporate reliability and growth.</div>
+          <span class="service-num">02</span>
         </div>
-        <div class="col-md-4">
-          <div class="tech-card">
-            <div class="icon-box"><i class="bi bi-code-slash"></i></div>
-            <h4>Custom Apps</h4>
-            <p class="text-muted">Bespoke software solutions built to solve your unique operational challenges.</p>
-          </div>
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="bi bi-code-slash"></i></div>
+          <div class="service-title">Custom Apps</div>
+          <div class="service-desc">Bespoke software solutions built to solve your unique operational challenges.</div>
+          <span class="service-num">03</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="projects" class="py-5 bg-black">
-    <div class="container">
-      <h2 class="fw-800 mb-5">Featured Repositories</h2>
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="tech-card">
-            <span class="badge bg-dark border border-secondary mb-2">Python / Django</span>
-            <h4>University Resource Booking (URBS)</h4>
-            <p class="text-muted small">A comprehensive management system designed to streamline institutional resource allocation and scheduling.</p>
-            <a href="https://github.com/Edujoew/University-Resource-Booking-System-URBS" target="_blank" class="project-link">
-              VIEW REPOSITORY <i class="bi bi-arrow-right"></i>
-            </a>
-          </div>
+  <section id="projects">
+    <div class="container-c">
+      <div class="reveal">
+        <div class="section-label"><i class="bi bi-layers-fill"></i> Featured Work</div>
+        <h2 class="section-title">Projects</h2>
+        <p class="section-sub">A selection of real-world systems shipped from concept to deployment.</p>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-badge"><i class="bi bi-filetype-py"></i> Python / Django</div>
+          <div class="project-title">University Resource Booking (URBS)</div>
+          <div class="project-desc">A comprehensive system designed to streamline institutional resource allocation and scheduling.</div>
+          <a href="https://github.com/Edujoew/University-Resource-Booking-System-URBS" target="_blank" class="project-link">
+            View Repository <i class="bi bi-arrow-right"></i>
+          </a>
         </div>
-        <div class="col-md-6">
-          <div class="tech-card">
-            <span class="badge bg-dark border border-secondary mb-2">Full Stack</span>
-            <h4>Smart Rent Manager</h4>
-            <p class="text-muted small">Next-gen property management tool for landlords and tenants, featuring automated billing and dashboard analytics.</p>
-            <a href="https://github.com/Edujoew/Smart-Rent-manager" target="_blank" class="project-link">
-              VIEW REPOSITORY <i class="bi bi-arrow-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-12 text-center mt-4">
-          <a href="https://github.com/edujoew" target="_blank" class="btn btn-outline-secondary">
-            Explore All Projects on GitHub <i class="bi bi-github ms-2"></i>
+        <div class="project-card reveal">
+          <div class="project-badge"><i class="bi bi-stack"></i> Full Stack</div>
+          <div class="project-title">Smart Rent Manager</div>
+          <div class="project-desc">Property management tool featuring automated billing, tenant tracking, and dashboard analytics.</div>
+          <a href="https://github.com/Edujoew/Smart-Rent-manager" target="_blank" class="project-link">
+            View Repository <i class="bi bi-arrow-right"></i>
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="py-5">
-    <div class="container">
-      <div class="tech-card p-lg-5">
-        <div class="row">
-          <div class="col-lg-6">
-            <h2 class="fw-800 mb-4">Initialize Project</h2>
-            <p class="text-muted mb-5">Available for global remote collaboration. Let's discuss your technical requirements.</p>
-            
-            <div class="mb-4 d-flex align-items-center gap-3">
-              <div class="icon-box mb-0 fs-4"><i class="bi bi-envelope"></i></div>
-              <a href="mailto:eddytech451@gmail.com" class="text-white text-decoration-none">eddytech451@gmail.com</a>
-            </div>
-            
-            <div class="mb-4 d-flex align-items-center gap-3">
-              <div class="icon-box mb-0 fs-4"><i class="bi bi-whatsapp"></i></div>
-              <a href="https://wa.me/254703817789" class="text-white text-decoration-none">+254 703 817 789</a>
-            </div>
-
-            <div class="d-flex gap-4 mt-5">
-              <a href="https://github.com/edujoew" class="social-btn"><i class="bi bi-github"></i></a>
-              <a href="https://linkedin.com/in/Johnny Edwards" class="social-btn"><i class="bi bi-linkedin"></i></a>
+  <section id="testimonials">
+    <div class="container-c">
+      <div class="reveal">
+        <div class="section-label"><i class="bi bi-chat-quote-fill"></i> Trust</div>
+        <h2 class="section-title">Testimonials</h2>
+        <p class="section-sub">What clients and collaborators say about EddyTech solutions.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <i class="bi bi-quote quote-icon"></i>
+          <p class="test-text">"EddyTech transformed our institutional workflow. The URBS platform clean UI and coding precision made management seamless."</p>
+          <div class="test-author">
+            <div class="author-initials">JD</div>
+            <div>
+              <span class="author-name">Jenkins Daisy</span>
+              <span class="author-role">Project Coordinator</span>
             </div>
           </div>
-          
-          <div class="col-lg-6">
-            <form action="mailto:eddytech451@gmail.com" method="post" enctype="text/plain">
-              <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Full Name" required>
-              </div>
-              <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email Address" required>
-              </div>
-              <div class="mb-3">
-                <textarea class="form-control" rows="5" placeholder="Project Brief" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Send Inquiry</button>
-            </form>
+        </div>
+        <div class="testimonial-card reveal">
+          <i class="bi bi-quote quote-icon"></i>
+          <p class="test-text">"Working with John was efficient. He bridged the gap between technical backend and smooth user experience perfectly."</p>
+          <div class="test-author">
+            <div class="author-initials">AK</div>
+            <div>
+              <span class="author-name">Allan K.</span>
+              <span class="author-role">Operations Manager</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="text-center">
-    <div class="container">
-      <p>© 2026 EddyTech — Built with Precision. Deployed via Vercel.</p>
+  <section id="contact">
+    <div class="container-c">
+      <div class="reveal">
+        <div class="section-label"><i class="bi bi-send-fill"></i> Get In Touch</div>
+        <h2 class="section-title">Start a Project</h2>
+      </div>
+      <div class="contact-wrap">
+        <div class="reveal">
+          <p class="contact-info-sub">Available for global remote collaboration. Let's discuss your technical requirements.</p>
+
+          <a href="mailto:eddytech451@gmail.com" class="contact-link-row">
+            <div class="contact-link-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">eddytech451@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://wa.me/254703817789" class="contact-link-row">
+            <div class="contact-link-icon"><i class="bi bi-whatsapp"></i></div>
+            <div>
+              <div class="contact-link-label">WhatsApp</div>
+              <div class="contact-link-value">+254 703 817 789</div>
+            </div>
+          </a>
+
+          <div class="socials">
+            <a href="https://github.com/edujoew" target="_blank" class="social-icon"><i class="bi bi-github"></i></a>
+            <a href="https://linkedin.com/in/Johnny-Edwards" target="_blank" class="social-icon"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="contact-form reveal">
+          <form action="mailto:eddytech451@gmail.com" method="post" enctype="text/plain">
+            <input type="text" class="form-input" placeholder="Full Name" required>
+            <input type="email" class="form-input" placeholder="Email Address" required>
+            <textarea class="form-input" rows="5" placeholder="Project Brief..." required></textarea>
+            <button type="submit" class="form-submit">Send Inquiry →</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">Eddy<span>Tech</span></div>
+    <div class="footer-copy">© 2026 EddyTech — Built with Precision.</div>
+    <div class="footer-copy">Build your Digital Legacy.</div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
