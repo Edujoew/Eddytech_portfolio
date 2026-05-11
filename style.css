@@ -1,7 +1,8 @@
 /* ══════════════════════════════════════
    EDDYTECH — SHARED DESIGN SYSTEM
 ══════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap');
+/* Updated to professional, standard Inter font stack */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   --bg:        #060810;
@@ -16,9 +17,10 @@
   --border:    rgba(255,255,255,.07);
   --border-h:  rgba(45,232,200,.4);
   --radius:    14px;
-  --mono:      'Space Mono', monospace;
-  --display:   'Syne', sans-serif;
-  --body:      'Outfit', sans-serif;
+  /* Font Variables reset to professional sans-serif */
+  --mono:      'Inter', monospace;
+  --display:   'Inter', sans-serif;
+  --body:      'Inter', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,7 +50,7 @@ body::before {
   background: var(--teal); color: var(--bg);
   padding: 13px 26px; border-radius: 50px;
   font-family: var(--display); font-weight: 800; font-size: .88rem;
-  letter-spacing: .06em; text-decoration: none;
+  letter-spacing: .02em; text-decoration: none;
   display: flex; align-items: center; gap: 8px;
   animation: pulse-ring 2.5s ease-out infinite;
   transition: transform .25s, box-shadow .25s;
@@ -110,13 +112,13 @@ body::before {
 
 
 .nav-links { 
-  display: flex; /* Ensures links are visible on desktop */
+  display: flex; 
   gap: 6px; 
   list-style: none; 
 }
 .nav-links a {
-  font-family: var(--mono); font-size: .78rem; color: var(--muted);
-  text-decoration: none; letter-spacing: .05em;
+  font-family: var(--body); font-size: .85rem; color: var(--muted);
+  text-decoration: none; letter-spacing: 0;
   padding: 6px 14px; border-radius: 6px;
   transition: color .2s, background .2s;
 }
@@ -133,7 +135,7 @@ body::before {
   .nav-wrap { padding: 0 20px; }
   .nav-toggle { display: block; }
   .nav-links {
-    display: none; /* Hides links only on mobile view */
+    display: none; 
     position: absolute; top: 68px; left: 0; right: 0;
     background: var(--bg-2); border-bottom: 1px solid var(--border);
     flex-direction: column; padding: 20px 30px; gap: 8px;
@@ -150,13 +152,14 @@ section { padding: 80px 40px; }
 
 .section-label {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--mono); font-size: .72rem; color: var(--teal);
-  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px;
+  font-family: var(--body); font-size: .72rem; color: var(--teal);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px;
+  font-weight: 600;
 }
 .section-title {
   font-family: var(--display); font-weight: 800;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  letter-spacing: -.03em; color: #fff; margin-bottom: 16px;
+  letter-spacing: -.02em; color: #fff; margin-bottom: 16px;
 }
 .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 60px; }
 
@@ -165,7 +168,7 @@ section { padding: 80px 40px; }
   background: var(--teal); color: var(--bg);
   border: none; border-radius: 50px; padding: 14px 32px;
   font-family: var(--display); font-weight: 700; font-size: .95rem;
-  letter-spacing: .02em; cursor: pointer; text-decoration: none;
+  letter-spacing: 0; cursor: pointer; text-decoration: none;
   transition: box-shadow .25s, transform .25s;
   display: inline-flex; align-items: center; gap: 8px;
 }
@@ -220,9 +223,9 @@ section { padding: 80px 40px; }
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .ticker-item {
   display: inline-flex; align-items: center; gap: 10px; padding: 0 32px;
-  font-family: var(--mono); font-size: .75rem; color: var(--muted);
+  font-family: var(--body); font-size: .8rem; color: var(--muted);
   white-space: nowrap; border-right: 1px solid var(--border);
-  letter-spacing: .08em; text-transform: uppercase;
+  letter-spacing: .02em; text-transform: uppercase; font-weight: 500;
 }
 .ticker-item i { color: var(--teal); font-size: .7rem; }
 
@@ -234,9 +237,9 @@ footer {
 }
 .footer-brand { font-family: var(--display); font-weight: 800; font-size: 1rem; color: #fff; }
 .footer-brand span { color: var(--teal); }
-.footer-copy { font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .06em; }
+.footer-copy { font-family: var(--body); font-size: .75rem; color: var(--muted); letter-spacing: 0; }
 .footer-links { display: flex; gap: 20px; }
-.footer-links a { font-family: var(--mono); font-size: .72rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+.footer-links a { font-family: var(--body); font-size: .75rem; color: var(--muted); text-decoration: none; transition: color .2s; }
 .footer-links a:hover { color: var(--teal); }
 
 /* ── REVEAL ── */
@@ -260,14 +263,15 @@ footer {
 .page-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
 .page-hero-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--mono); font-size: .72rem; color: var(--teal);
-  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px;
+  font-family: var(--body); font-size: .72rem; color: var(--teal);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px;
+  font-weight: 600;
 }
 .page-hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--teal); }
 .page-hero-title {
   font-family: var(--display); font-weight: 800;
   font-size: clamp(2.5rem, 6vw, 4rem);
-  letter-spacing: -.04em; color: #fff; line-height: 1.05;
+  letter-spacing: -.03em; color: #fff; line-height: 1.05;
 }
 .page-hero-title span {
   background: linear-gradient(100deg, var(--teal) 0%, var(--amber) 100%);
@@ -277,8 +281,9 @@ footer {
 
 /* ── FORM INPUTS ── */
 .form-label-c {
-  display: block; font-family: var(--mono); font-size: .7rem;
-  color: var(--teal); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px;
+  display: block; font-family: var(--body); font-size: .75rem;
+  color: var(--teal); letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px;
+  font-weight: 600;
 }
 .form-input {
   width: 100%; background: var(--bg-2); border: 1px solid var(--border);
@@ -289,8 +294,8 @@ footer {
 .form-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-dim); }
 .form-submit {
   width: 100%; background: var(--teal); color: var(--bg); border: none;
-  border-radius: 50px; padding: 15px; font-family: var(--display); font-weight: 800;
-  font-size: 1rem; letter-spacing: .04em; cursor: pointer;
+  border-radius: 50px; padding: 15px; font-family: var(--display); font-weight: 700;
+  font-size: 1rem; letter-spacing: 0; cursor: pointer;
   transition: box-shadow .25s, transform .25s;
 }
 .form-submit:hover { box-shadow: 0 0 40px var(--teal-glow); transform: translateY(-2px); }
